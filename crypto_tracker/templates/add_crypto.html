@@ -1,0 +1,20 @@
+<form id="add-crypto-form" method="POST" action="/add_crypto">
+  <h2>Add New Crypto Purchase</h2>
+  <label>
+    Crypto Name:
+    <input type="text" name="cryptoName" required>
+  </label><br>
+  <label>
+    Purchase Date:
+    <input type="date" name="purchaseDate" required>
+  </label><br>
+  <label>
+    Amount:
+    <input type="number" step="any" name="amount" required>
+  </label><br>
+  <label>
+    Total Price (EUR):
+    <input type="number" step="any" name="totalPriceEUR" required>
+  </label><br>
+  <button type="submit">Add Purchase</button>
+</form>

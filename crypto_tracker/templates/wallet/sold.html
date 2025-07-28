@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+  <h2 class="mt-4">Wallet Sold Cryptos</h2>
+  <div class="table-responsive">
+    <table id="cryptoTable" class="table table-dark table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Crypto</th>
+          <th scope="col">Amount</th>
+          <th scope="col">Total Purchase Price (€)</th>
+          <th scope="col">Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Data will be inserted here -->
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script src="{{ url_for('static', filename='js/wallet/sold.js') }}"></script>
+{% endblock %}

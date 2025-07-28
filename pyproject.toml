@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "crypto_tracker"
-version = "0.1.0"
+version = "0.2.0"
 description = "A lightweight, local web tool for managing and viewing your personal cryptocurrency purchases."
 authors = ["kranjuli <timit06@google.com>"]
 readme = "README.md"
@@ -10,9 +10,10 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = "^3.11"
 flask = "^3.1.1"
 gunicorn = "^23.0.0"
+pandas = "^2.3.1"
 
 [build-system]
 requires = ["poetry-core"]

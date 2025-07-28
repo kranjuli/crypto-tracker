@@ -1,27 +1,72 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Crypto Portfolio</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> -->
-</head>
-<body>
-    <div class="container-fluid">
-        {% include "nav.html" %}
-        <div class="row">
-            <!-- List of purchases cryptos -->
-            {% include "purchased_cryptos_list.html" %}
-        </div>
-        <div class="row">
-            <div class="col">
-                <p><a href="/export/csv" target="_blank">📤 Export cryptos to CSV</a></p>
-            </div>
-        </div>
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-8">
+      <h4 class="mt-4">Last 20 Trades</h2>
+      <div class="table-responsive">
+          <table id="cryptoDashBoardTable" class="table table-dark table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Crypto</th>
+                  <th scope="col">Gain/Loss (€)</th>
+                  <th scope="col">Purchase Price (€)</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">Total Purchase Price (€)</th>
+                  <th scope="col">Total Current Price (€)</th>
+                  <th scope="col">Purchase Date</th>
+                  <th scope="col">Broker</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Data will be inserted here -->
+              </tbody>
+          </table>
+      </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js" integrity="sha384-7qAoOXltbVP82dhxHAUje59V5r2YsVfBafyUDxEdApLPmcdhBPg1DKg1ERo0BZlK" crossorigin="anonymous"></script>
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/clock.js') }}"></script>
-</body>
-</html>
+    <div class="col-4">
+      <div class="row">
+          <h4 class="mt-4">Balance</h2>
+          <div class="table-responsive">
+              <table id="cryptoBalanceTable" class="table table-dark table-hover">
+                  <thead>
+                    <tr>
+                      <th scope="col">Crypto</th>
+                      <th scope="col">Amount</th>
+                      <th scope="col">Market Price (€)</th>
+                      <th scope="col">Balance (€)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Data will be inserted here -->
+                  </tbody>
+              </table>
+          </div>
+          <hr>
+          <h4 class="mt-2">Last 10 Deposit</h2>
+          <div class="table-responsive">
+              <table id="cryptoDepositTable" class="table table-dark table-hover">
+                  <thead>
+                    <tr>
+                      <th scope="col">Date</th>
+                      <th scope="col">Amount (€)</th>
+                      <th scope="col">Broker</th>
+                      <th scope="col">Payment Method</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Data will be inserted here -->
+                  </tbody>
+              </table>
+          </div>
+      </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+<script src="{{ url_for('static', filename='js/wallet/balance.js') }}"></script>
+<script src="{{ url_for('static', filename='js/deposit/summary.js') }}"></script>
+{% endblock %}

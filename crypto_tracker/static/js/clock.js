@@ -12,9 +12,6 @@ function updateTimeAndDate() {
   const timeString = `${hours}:${minutes}:${seconds} ${ampm}`;
   document.getElementById('clock').textContent = timeString;
 
-  // Date in format: weekday, dd.mm.yyyy
-  // const days = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
-  // const dayName = days[now.getDay()];
   const day = String(now.getDate()).padStart(2, '0');
   const month = String(now.getMonth() + 1).padStart(2, '0'); // month from 0-11
   const year = now.getFullYear();

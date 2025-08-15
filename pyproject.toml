@@ -1,8 +1,8 @@
 [tool.poetry]
 name = "crypto_tracker"
-version = "0.2.0"
+version = "0.3.0"
 description = "A lightweight, local web tool for managing and viewing your personal cryptocurrency purchases."
-authors = ["kranjuli <timit06@google.com>"]
+authors = ["kranjuli <timit06@googlemail.com>"]
 readme = "README.md"
 
 packages = [

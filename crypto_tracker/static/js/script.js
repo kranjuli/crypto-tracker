@@ -24,17 +24,18 @@ async function renderTable() {
     const gainCss = 'text-success bg-success-subtle border border-success-subtle';
     const lossCss = 'text-danger bg-danger-subtle border border-danger-subtle';
     row.innerHTML = `
-      <th scope="row">${crypto.id}</th>
       <th scope="row">${crypto.crypto_name}</th>
-       <td class="${gainLoss >= 0 ? gainCss : lossCss}">
-         ${gainLoss.toLocaleString('de-DE', { minimumFractionDigits: 2 })}
-       </td>
-       <td>${crypto.trade_price}</td>
-       <td>${crypto.amount.toLocaleString('de-DE', { minimumFractionDigits: 2 })}</td>
-       <td>${crypto.total_trade_price.toLocaleString('de-DE', { minimumFractionDigits: 2 })}</td>
-       <td>${currentValue.toLocaleString('de-DE', { minimumFractionDigits: 2 })}</td>
-       <td>${crypto.trade_date}</td>
-       <td>${crypto.broker}</td>
+      <td>${crypto.type}</th>
+      <td class="${gainLoss >= 0 ? gainCss : lossCss}">
+        ${gainLoss.toLocaleString('de-DE', { minimumFractionDigits: 2 })}
+      </td>
+      <td>${crypto.trade_price}</td>
+      <td>${currentPrice.toFixed(4)}</td>
+      <td>${crypto.amount.toLocaleString('de-DE', { minimumFractionDigits: 2 })}</td>
+      <td>${crypto.total_trade_price.toLocaleString('de-DE', { minimumFractionDigits: 2 })}</td>
+      <td>${currentValue.toLocaleString('de-DE', { minimumFractionDigits: 2 })}</td>
+      <td>${crypto.trade_date}</td>
+      <td>${crypto.broker}</td>
     `;
   });
 }

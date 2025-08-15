@@ -84,7 +84,10 @@ def union_and_remaining_csv_data(csv_file_list: list[str], data_frame: bool = Fa
 
     name_map = data_frame_cryptos_buy[["crypto_alias", "crypto_name"]].drop_duplicates()
     result = pd.merge(result, name_map, on="crypto_alias", how="left")
-    
+
+    # filter out entries with remaining_amount == 0
+    result = result[result["remaining_amount"] != 0]
+
     if data_frame:
         return result
     else:

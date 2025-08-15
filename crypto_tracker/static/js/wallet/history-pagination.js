@@ -10,7 +10,6 @@ async function renderTradeHistory() {
     row.innerHTML = `
       <th scope="row">${crypto.id}</th>
       <th class="${crypto.type == 'buy' ? 'text-success' : 'text-danger'}" scope="row">${crypto.crypto_name}</th>
-      <td>${crypto.crypto_alias}</td>
       <td>${crypto.type}</td>
       <td>${crypto.amount}</td>
       <td>${crypto.total_trade_price}</td>

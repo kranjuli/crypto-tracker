@@ -30,3 +30,5 @@ id,crypto_alias,crypto_name,broker,trade_date,trade_price,amount,total_trade_pri
 29,pepe,PEPE,Bitget,08.05.2025,9.9548e-06,12189190.81,100.0,1
 30,pepe,PEPE,Bitvavo,23.06.2025,7.784e-05,8979959.0,70.01,1
 31,dogwifcoin,WIF,Bitvavo,23.06.2025,0.60302,164.256575,99.2,1
+32,dogwifcoin,WIF,Bitvavo,26.08.2025,0.6645,240.0,160.0,1
+33,dogwifcoin,WIF,Bitvavo,01.09.2025,0.67660,250.0,170.0,1

@@ -138,7 +138,7 @@ def add_deposit():
         }
 
         save_deposit_csv_data(new_entry)
-        return redirect(url_for('deposit_summary_page'))
+        return redirect(url_for('api.deposit_summary_page'))
     except Exception as e:
         return jsonify({"error": str(e)}), 500
         # return render_template("error.html", error=str(e)), 500

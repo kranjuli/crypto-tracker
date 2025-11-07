@@ -4,10 +4,10 @@ id,crypto_alias,crypto_name,broker,trade_date,trade_price,amount,total_trade_pri
 3,dogecoin,DOGE,Binance,30.11.2021,0.192,315.0,59.91,0
 4,vechain,VET,Binance,23.04.2023,0.02094,2090.21,43.77,1
 5,ripple,XRP,Binance,06.11.2023,0.7187,198.0,142.0,0
-6,not,NOT,Binance,08.06.2024,0.02055,14958.0,300.0,1
-7,not,NOT,Binance,09.06.2024,0.018501,6756.0,125.0,1
-8,not,NOT,Binance,11.06.2024,0.0155,8066.0,125.0,1
-9,not,NOT,Binance,18.06.2024,0.01452,10000.0,150.0,1
+6,notcoin,NOT,Binance,08.06.2024,0.02055,14958.0,300.0,1
+7,notcoin,NOT,Binance,09.06.2024,0.018501,6756.0,125.0,1
+8,notcoin,NOT,Binance,11.06.2024,0.0155,8066.0,125.0,1
+9,notcoin,NOT,Binance,18.06.2024,0.01452,10000.0,150.0,1
 10,pepe,PEPE,Binance,26.04.2024,1.032e-05,24127906.0,249.0,1
 11,book-of-meme,BOME,Binance,15.01.2024,0.010493,14873.0,156.06,1
 12,pepe,PEPE,Binance,05.08.2024,6.76e-05,23540358.0,199.69,1
@@ -47,4 +47,11 @@ id,crypto_alias,crypto_name,broker,trade_date,trade_price,amount,total_trade_pri
 46,dogecoin,DOGE,Bitvavo,30.10.2025,0.1597,312.3,49.95,0
 47,ripple,XRP,Bitvavo,30.10.2025,2.165,46.073,99.9,0
 48,arbitrum,ARB,Bitvavo,30.10.2025,0.25969,390.0,101.44,0
-49,ethereum,ETH,Bitvavo,30.10.2025,3298,0.03,99.09,0
+49,ethereum,ETH,Bitvavo,30.10.2025,3298.0,0.03,99.09,0
+50,dogecoin,DOGE,Bitvavo,31.10.2025,0.15989,312.0,49.97,0
+51,bitcoin,BTC,Bitvavo,30.10.2025,92500.0,0.0004,37.06,0
+52,dogecoin,DOGE,Bitvavo,03.11.2025,0.15699,636.0,100.0,0
+53,solana,SOLANA,Bitvavo,03.11.2025,155.0,0.66,102.46,0
+54,ripple,XRP,Bitvavo,03.11.2025,2.0992,23.003,48.37,0
+55,dogwifcoin,WIF,Bitvavo,03.11.2025,0.39586,125.0,49.55,0
+56,ripple,XRP,Bitvavo,04.11.2025,1.9598,25.0,49.07,0

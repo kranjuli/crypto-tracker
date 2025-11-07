@@ -41,9 +41,17 @@ def edit_crypto_page():
     if found_crypto:
         date_obj = datetime.strptime(found_crypto["trade_date"], "%d.%m.%Y")
         found_crypto["trade_date"] = date_obj.strftime("%Y-%m-%d")
-        return render_template("wallet/edit.html", active_page='crypto-summary', crypto=found_crypto)
+        return render_template(
+            "wallet/edit.html",
+            active_page='crypto-summary',
+            crypto=found_crypto
+        )
     else:
-        return render_template("wallet/update.html", active_page='crypto-summary', error=f"Crypto with ID: {update_crypto_form.get('cryptoRecordId')} not found"), 404
+        return render_template(
+            "wallet/update.html",
+            active_page='crypto-summary',
+            error=f"Crypto with ID: {update_crypto_form.get('cryptoRecordId')} not found"
+        ), 404
 
 
 @pages_bp.route("/page/wallet/update")
@@ -53,8 +61,14 @@ def update_crypto_page():
 
 @pages_bp.route("/page/deposit/summary")
 def deposit_summary_page():
-    deposit, summary = load_deposit_csv_data()
-    return render_template("deposit/summary.html", active_page='deposit-summary', deposit=deposit, summary=summary)
+    all_deposits, summary, summary_by_broker = load_deposit_csv_data()
+    return render_template(
+        "deposit/summary.html",
+        active_page='deposit-summary',
+        deposits=all_deposits,
+        total_sum=summary,
+        summary_by_broker=summary_by_broker
+    )
 
 
 @pages_bp.route("/page/deposit/add")

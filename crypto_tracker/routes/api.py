@@ -117,13 +117,6 @@ def add_crypto():
         return jsonify({"error": str(e)}), 500
         # return render_template("error.html", error=str(e)), 500
 
-
-@api_bp.route("/api/deposit/summary")
-def deposit_summary_page():
-    deposit, summary = load_deposit_csv_data()
-    return jsonify(deposit)
-
-
 @api_bp.route("/api/deposit/add", methods=["POST"])
 def add_deposit():
     try:

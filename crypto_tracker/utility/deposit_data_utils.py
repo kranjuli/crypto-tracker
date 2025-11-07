@@ -22,6 +22,7 @@ def load_deposit_csv_data() -> tuple[list[dict], float]:
 
     data = []
     summary = 0
+    broker_sums = defaultdict(float)
     try:
         with DATA_DEPOSIT_CSV_FILE.open(mode='r', encoding='utf-8') as csvfile:
             reader = csv.DictReader(csvfile)
@@ -33,17 +34,26 @@ def load_deposit_csv_data() -> tuple[list[dict], float]:
                     summary += amount
                 except ValueError:
                     row['amount'] = 0.00
-
+                broker = row.get('broker', 'Unknown').strip()
+                broker_sums[broker] += amount
                 data.append(row)
     except (csv.Error, UnicodeDecodeError, OSError) as e:
         logger.error(f"Error at reading CSV File: {e}")
-        return [], 0
+        return [], 0, []
 
-    return data, summary
+    # filter by broker_sums and sort descending
+    summary_by_broker = [
+        {"broker": broker, "amount": round(amount, 2)}
+        for broker, amount in sorted(broker_sums.items(), key=lambda x: x[1], reverse=True)
+    ]
+
+    return data, summary, summary_by_broker
 
 
 def save_deposit_csv_data(data: dict[str, str | float | int]) -> None:
-    """Save crypto purchases to CSV file."""
+    """
+    Save crypto purchases to CSV file.
+    """
     fieldnames = ["date", "amount", "broker", "method"]
 
     rows: list[dict[str, str]] = []

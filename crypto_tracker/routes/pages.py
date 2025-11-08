@@ -66,6 +66,16 @@ def deposit_summary_page():
         "deposit/summary.html",
         active_page='deposit-summary',
         deposits=all_deposits,
+        total_sum=summary
+    )
+
+
+@pages_bp.route("/page/deposit/broker")
+def deposit_broker_page():
+    all_deposits, summary, summary_by_broker = load_deposit_csv_data()
+    return render_template(
+        "deposit/broker.html",
+        active_page='deposit-summary',
         total_sum=summary,
         summary_by_broker=summary_by_broker
     )

@@ -20,6 +20,7 @@
         <table id="cryptoDepositTable" class="table table-dark table-hover">
             <thead>
               <tr>
+                <th scope="col">ID</th> 
                 <th scope="col">Date</th>
                 <th scope="col">Amount (€)</th>
                 <th scope="col">Broker</th>
@@ -29,6 +30,7 @@
             <tbody>
               {% for item in deposits %}
                 <tr>
+                    <td>{{ item.id }}</td>
                     <td>{{ item.date }}</td>
                     <td>{{ item.amount }}</td>
                     <td>{{ item.broker }}</td>

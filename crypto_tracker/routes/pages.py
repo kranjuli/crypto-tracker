@@ -48,15 +48,15 @@ def edit_crypto_page():
         )
     else:
         return render_template(
-            "wallet/update.html",
+            "wallet/get.html",
             active_page='crypto-summary',
             error=f"Crypto with ID: {update_crypto_form.get('cryptoRecordId')} not found"
         ), 404
 
 
-@pages_bp.route("/page/wallet/update")
+@pages_bp.route("/page/wallet/get")
 def update_crypto_page():
-    return render_template("wallet/update.html", active_page='crypto-summary')
+    return render_template("wallet/get.html", active_page='crypto-summary')
 
 
 @pages_bp.route("/page/deposit/summary")
@@ -84,3 +84,29 @@ def deposit_broker_page():
 @pages_bp.route("/page/deposit/add")
 def add_new_deposit_page():
     return render_template("deposit/add.html", active_page='deposit-summary')
+
+
+@pages_bp.route("/page/deposit/get")
+def update_deposit_page():
+    return render_template("deposit/get.html", active_page='deposit-summary')
+
+
+@pages_bp.route("/page/deposit/edit", methods=["POST"])
+def edit_deposit_page():
+    update_deposit_form = request.form
+    found_deposit = get_csv_data_by_id('data/deposit.csv', int(update_deposit_form.get("depositRecordId")))
+
+    if found_deposit:
+        date_obj = datetime.strptime(found_deposit["date"], "%d.%m.%Y")
+        found_deposit["date"] = date_obj.strftime("%Y-%m-%d")
+        return render_template(
+            "deposit/edit.html",
+            active_page='deposit-summary',
+            deposit=found_deposit
+        )
+    else:
+        return render_template(
+            "deposit/get.html",
+            active_page='deposit-summary',
+            error=f"Deposit with ID: {update_deposit_form.get('depositRecordId')} not found"
+        ), 404

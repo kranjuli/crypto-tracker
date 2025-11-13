@@ -1,3 +1,5 @@
+import pandas as pd
+
 from pathlib import Path
 from collections import defaultdict
 
@@ -69,3 +71,54 @@ def save_deposit_csv_data(data: dict[str, str | float | int]) -> None:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(rows)
+
+
+def upsert_deposit_csv_data_with_auto_id(csv_file: str, match_criteria: dict, new_values: dict):
+    """
+    Update a row in CSV file based on match_criteria or insert new row.
+    """
+    try:
+        df = pd.read_csv(csv_file, dayfirst=True)
+    except FileNotFoundError:
+        df = pd.DataFrame(columns=["id", "date", "amount", "broker", "method"])
+
+    expected_cols = ["id", "date", "amount", "broker", "method"]
+    for col in expected_cols:
+    	if col not in df.columns:
+            df[col] = None
+    df = df[expected_cols]
+
+    df["id"] = pd.to_numeric(df["id"], errors="coerce")
+
+    # Check if data already exists
+    if not df.empty and match_criteria:
+        mask = pd.Series([True] * len(df))
+        for key, value in match_criteria.items():
+            mask &= df[key] == value
+    else:
+        mask = pd.Series([False] * len(df))
+
+    if mask.any():
+        # update
+        for column, value in new_values.items():
+            df.loc[mask, column] = value
+    else:
+        # generate new ID
+        if df["id"].notna().any:
+            next_id = int(df["id"].max()) + 1
+        else:
+            next_id = 1
+
+        # insert new data
+        new_entry = new_values.copy()
+        new_entry["id"] = next_id
+
+	# fill missing columns
+        for col in df.columns:
+            if col not in new_entry:
+                new_entry[col] = None
+
+        df = pd.concat([pd.DataFrame([new_entry]), df], ignore_index=True)
+
+    # save in CSV
+    df.to_csv(csv_file, index=False)

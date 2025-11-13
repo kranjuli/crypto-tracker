@@ -154,10 +154,11 @@ def get_csv_data_by_id(csv_file: str, data_id: int, data_frame: bool = False) ->
     except (FileNotFoundError, pd.errors.ParserError) as e:
         logger.error(f"Error at loading the CSV file: {e}")
         return None
+
     record: pd.DataFrame = df[df['id'] == data_id]
     if record.empty:
+        logger.info("get_csv_data_by_id: record empty")
         return None
-    
     return record if data_frame else record.iloc[0].to_dict()
 
 

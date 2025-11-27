@@ -14,7 +14,7 @@ from crypto_tracker.utility.crypto_csv_data_utils import (
     save_data_frame_to_csv
 )
 
-from crypto_tracker.utility.deposit_data_utils import load_deposit_csv_data, save_deposit_csv_data
+from crypto_tracker.utility.deposit_data_utils import load_deposit_csv_data, upsert_deposit_csv_data_with_auto_id
 
 
 logging.basicConfig(level=logging.DEBUG)
@@ -26,6 +26,7 @@ api_bp = Blueprint("api", __name__)
 DATA_CRYPTO_BUY_CSV_FILE = 'data/purchased_cryptos.csv'
 DATA_CRYPTO_SOLD_CSV_FILE = 'data/sold_cryptos.csv'
 DATA_CRYPTO_BALANCE_CSV_FILE = 'data/wallet_balance.csv'
+DATA_DEPOSIT_CSV_FILE = 'data/deposit.csv'
 
 
 @api_bp.route("/api/wallet/history")
@@ -38,6 +39,7 @@ def get_trade_history():
 
     return jsonify(concatenate_csv_data_frames([df_buy, df_sell]))
 
+
 @api_bp.route("/api/wallet/dashboard")
 def get_last_twenty_trades_history():
     df_buy = load_csv_data(DATA_CRYPTO_BUY_CSV_FILE, True)
@@ -48,17 +50,21 @@ def get_last_twenty_trades_history():
 
     return jsonify(concatenate_csv_data_frames([df_buy, df_sell], max_rows=20))
 
+
 @api_bp.route("/api/wallet/buy")
 def get_buy_cryptos():
     return jsonify(load_csv_data(DATA_CRYPTO_BUY_CSV_FILE))
+
 
 @api_bp.route("/api/wallet/sold")
 def get_sold_cryptos():
     return jsonify(load_csv_data(DATA_CRYPTO_SOLD_CSV_FILE))
 
+
 @api_bp.route("/api/wallet/balance")
 def get_wallet_balance():
     return jsonify(load_csv_data_with_csv_pkg(DATA_CRYPTO_BALANCE_CSV_FILE))
+
 
 @api_bp.route("/api/wallet/balance/update")
 def update_wallet_balance_csv_table() -> None:
@@ -66,7 +72,8 @@ def update_wallet_balance_csv_table() -> None:
     save_data_frame_to_csv(df_balance, 'data/wallet_balance.csv')
     return jsonify({"message": "OK"}), 200
 
-@api_bp.route("/api/wallet/update", methods=["POST"])
+
+@api_bp.route("/api/wallet/edit", methods=["POST"])
 def update_crypto():
     try:
         edit_crypto_form = request.form
@@ -89,6 +96,7 @@ def update_crypto():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
         # return render_template("error.html", error=str(e)), 500
+
 
 @api_bp.route("/api/wallet/add", methods=["POST"])
 def add_crypto():
@@ -117,10 +125,12 @@ def add_crypto():
         return jsonify({"error": str(e)}), 500
         # return render_template("error.html", error=str(e)), 500
 
+
 @api_bp.route("/api/deposit/summary")
 def deposit_summary_page():
     deposit, summary, summary_by_broker = load_deposit_csv_data()
     return jsonify(deposit)
+
 
 @api_bp.route("/api/deposit/add", methods=["POST"])
 def add_deposit():
@@ -128,14 +138,34 @@ def add_deposit():
         add_deposit_form = request.form
         date_obj = datetime.strptime(add_deposit_form.get("depositDate"), "%Y-%m-%d")
         formatted_date = date_obj.strftime("%d.%m.%Y")
-        new_entry = {
+        new_deposit = {
             "date": formatted_date,
             "broker": add_deposit_form.get("depositBroker"),
             "amount": float(add_deposit_form.get("depositAmount")),
             "method": add_deposit_form.get("depositMethod")
         }
+        upsert_deposit_csv_data_with_auto_id(DATA_DEPOSIT_CSV_FILE, {}, new_deposit)
+        # save_deposit_csv_data(new_entry)
+        return redirect(url_for('pages.deposit_summary_page'))
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+        # return render_template("error.html", error=str(e)), 500
 
-        save_deposit_csv_data(new_entry)
+
+@api_bp.route("/api/deposit/edit", methods=["POST"])
+def update_deposit():
+    try:
+        edit_deposit_form = request.form
+        date_obj = datetime.strptime(edit_deposit_form.get("depositDate"), "%Y-%m-%d")
+        formatted_date = date_obj.strftime("%d.%m.%Y")
+        updated_deposit = {
+            'trade_date': formatted_date,
+            'broker': edit_deposit_form.get("depositBroker"),
+            'amount': float(edit_deposit_form.get("depositAmount")),
+            'method': edit_deposit_form.get("depositMethod")
+        }
+
+        upsert_csv_data_with_auto_id(DATA_DEPOSIT_CSV_FILE, {'id': int(edit_deposit_form.get("recordId"))}, updated_deposit)
         return redirect(url_for('pages.deposit_summary_page'))
     except Exception as e:
         return jsonify({"error": str(e)}), 500

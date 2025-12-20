@@ -25,16 +25,19 @@ A lightweight, local web tool for managing and viewing your personal cryptocurre
 crypto-tracker/
 ├── crypto_tracker/
 │   ├── app.py                  # Flask web server (only Routing + API)
-│   ├── data_utils.py           # Helper functions for JSON data
-├── templates/
+│   ├── init.py           
+│   ├── routes/ 
+│   ├── utility/                #  Helper functions for JSON data
+│   ├── templates/
 │   └── index.html              # Web interface
+├── systemd_services/           # systemd service                   
 ├── static/
-│   ├── css/
-│   │   └── style.css           # Responsive CSS styles
-│   └── js/
-│    └── script.js               # Frontend logic (table, prices, API calls)
-├── data/
-│   └── purchased_cryptos.json  # Purchased cryptos data in json
+│   ├── js/                     # Frontend logic (table, prices, API calls)
+│       └── style.css           # Responsive CSS styles
+├── data/                       # CSV data (symlink to /mnt/ssd/crypto-tracker/data)
+├── poetry.lock
+├── pyproject.toml
+└── Dockerfile
 ````
 
 ## 🚀 How to Run
@@ -54,6 +57,18 @@ crypto-tracker/
 
    Visit: http://<your-raspberry-pi-ip>:8080
 
+## Running with Docker
+
+````shell
+cd crypto-tracker
+
+docker build -t crypto-tracker .
+
+docker run -d --name crypto-tracker -p 8000:8000 -v /mnt/ssd/crypto-tracker/data:/app/data crypto-tracker:latest
+
+docker exec -it crypto-tracker bash
+````
+
 ## 📝 Adding New Purchases
 
 Use the form at the top of the page to add new purchases.
@@ -64,32 +79,7 @@ Fields:
 * Amount
 * Total price in EUR
 
-Your data is saved directly to purchased_cryptos.json.
-
-## 📤 Export to CSV
-
-Click on “📤 Export as CSV” to download your purchase data as a CSV file – ready to import into Excel or for backup.
-
-## 📚 JSON Format
-
-Example of `data/purchased_cryptos.json`:
-
-````json
-[
-  {
-    "cryptoName": "bitcoin",
-    "purchaseDate": "2024-01-15",
-    "amount": 0.5,
-    "totalPriceEUR": 15000
-  },
-  {
-    "cryptoName": "ethereum",
-    "purchaseDate": "2024-02-20",
-    "amount": 2,
-    "totalPriceEUR": 4000
-  }
-]
-````
+Your data is saved directly to `data/purchased_cryptos.csv`.
 
 Make sure the cryptoName matches the official CoinGecko IDs.
 

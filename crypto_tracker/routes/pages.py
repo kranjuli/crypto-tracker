@@ -59,6 +59,11 @@ def update_crypto_page():
     return render_template("wallet/get.html", active_page='crypto-summary')
 
 
+@pages_bp.route("/page/wallet/trades")
+def trades_page():
+    return render_template("wallet/trades.html", active_page='wallet')
+
+
 @pages_bp.route("/page/deposit/summary")
 def deposit_summary_page():
     all_deposits, summary, summary_by_broker = load_deposit_csv_data()

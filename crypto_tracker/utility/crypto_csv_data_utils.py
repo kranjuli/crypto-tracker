@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 
 def load_csv_data(csv_file: str, data_frame: bool = False) -> pd.DataFrame | list[dict]:
-    """Load crypto data from CSV."""
+    """Load all crypto data from CSV."""
     try:
         data_frame_cryptos = pd.read_csv(
             csv_file,

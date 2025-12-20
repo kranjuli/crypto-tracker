@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <h2 class="mt-4">Wallet - Trades</h2>
+    <div class="table-responsive">
+        <table id="cryptoTable" class="table table-dark table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Crypto</th>
+                    <th scope="col">Alias</th>
+                    <th scope="col">Buy/Sell</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Price (€)</th>
+                    <th scope="col">Total Price (€)</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Broker</th>
+                    <th scope="col">Meme</th>
+                </tr>
+            </thead>
+            <tbody id="tradeTableBody">
+                <!-- Data will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+
+    <div class="d-flex justify-content-center mt-3">
+        <nav aria-label="Trades pagination">
+            <ul id="pagination" class="pagination justify-content-center">
+            </ul>
+        </nav>
+    </div>
+</div>
+{% block javascript %}
+<script src="{{ url_for('static', filename='js/wallet/trades.js') }}"></script>
+{% endblock %}

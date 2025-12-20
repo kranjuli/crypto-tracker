@@ -14,6 +14,10 @@ from crypto_tracker.utility.crypto_csv_data_utils import (
     save_data_frame_to_csv
 )
 
+from crypto_tracker.utility.trade_utils import (
+    load_trades_paginated
+)
+
 from crypto_tracker.utility.deposit_data_utils import load_deposit_csv_data, upsert_deposit_csv_data_with_auto_id
 
 
@@ -170,3 +174,20 @@ def update_deposit():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
         # return render_template("error.html", error=str(e)), 500
+
+
+@api_bp.route("/api/wallet/trades")
+def trades():
+    page = int(request.args.get("page", 1))
+    page_size = int(request.args.get("page_size", 25))
+    sources = [
+        (DATA_CRYPTO_BUY_CSV_FILE, DATA_CRYPTO_SOLD_CSV_FILE)
+    ]
+
+    result = load_trades_paginated(
+        sources,
+        page=page,
+        page_size=page_size
+    )
+
+    return jsonify(result)
